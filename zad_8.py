@@ -1,6 +1,6 @@
 import requests
+import argparse
 from typing import List, Optional, Dict, Any
-
 
 API_adres = "https://api.openbrewerydb.org/v1/breweries"
 
@@ -33,9 +33,7 @@ class Brewery:
             self.postal_code,
             self.country
         ]
-
         full_address = ", ".join(part for part in address_parts if part)
-
 
         description = f"""
         --- Browar: {self.name} ---
@@ -44,28 +42,28 @@ class Brewery:
         Strona WWW: {self.website_url if self.website_url else 'Brak'}
         Telefon: {self.phone if self.phone else 'Brak'}
         """
-
         return description.strip()
 
 
-def get_breweries(count: int = 20) -> List[Brewery]:
+def get_breweries(count: int = 20, city: Optional[str] = None) -> List[Brewery]:
 
-    print(f"Łączę się z API: {API_adres} i pobieram pierwsze {count} browarów...")
+    params: Dict[str, Any] = {"per_page": count}
+
+    search_info = f"pobieram pierwsze {count} browarów"
 
 
-    params = {"per_page": count}
+    if city:
+        params["by_city"] = city
+        search_info = f"filtruję wg miasta '{city}' i pobieram pierwsze {count} wyników"
+
+    print(f"Łączę się z API: {API_adres} i {search_info}...")
 
     try:
-
         response = requests.get(API_adres, params=params)
-
-
         response.raise_for_status()
-
 
         breweries_data: List[Dict[str, Any]] = response.json()
 
-        
         brewery_objects: List[Brewery] = [
             Brewery(data) for data in breweries_data
         ]
@@ -77,10 +75,28 @@ def get_breweries(count: int = 20) -> List[Brewery]:
         return []
 
 
+def main():
+    parser = argparse.ArgumentParser(
+        description="Skrypt pobiera dane o browarach z Open Brewery DB API, z opcjonalnym filtrowaniem po mieście."
+    )
 
-if __name__ == "__main__":
-    browary_lista: List[Brewery] = get_breweries(count=20)
+    parser.add_argument(
+        "--city",
+        type=str,
+        default=None,
+        help="Ogranicza pobierane browary do podanego miasta (np. --city=san_diego)"
+    )
 
-    for i, browar in enumerate(browary_lista):
+    args = parser.parse_args()
+
+    browary_lista: List[Brewery] = get_breweries(count=20, city=args.city)
+
+    if browary_lista:
+        for i, browar in enumerate(browary_lista):
+            print(f"\n--- OBIEKT NR {i + 1} ---")
             print(browar)
 
+
+
+if __name__ == "__main__":
+    main()
