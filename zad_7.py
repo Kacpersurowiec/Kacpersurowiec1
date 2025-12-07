@@ -1,7 +1,6 @@
 import requests
 from typing import List, Optional, Dict, Any
 
-
 API_adres = "https://api.openbrewerydb.org/v1/breweries"
 
 
@@ -36,7 +35,6 @@ class Brewery:
 
         full_address = ", ".join(part for part in address_parts if part)
 
-
         description = f"""
         --- Browar: {self.name} ---
         Typ: {self.brewery_type.capitalize()}
@@ -50,37 +48,29 @@ class Brewery:
 
 def get_breweries(count: int = 20) -> List[Brewery]:
 
-    print(f"Łączę się z API: {API_adres} i pobieram pierwsze {count} browarów...")
-
+    print(f"Łączę się z API: {API_adres} i "
+          f"pobieram pierwsze {count} browarów...")
 
     params = {"per_page": count}
-
     try:
 
         response = requests.get(API_adres, params=params)
-
-
         response.raise_for_status()
-
-
         breweries_data: List[Dict[str, Any]] = response.json()
-
-        
         brewery_objects: List[Brewery] = [
             Brewery(data) for data in breweries_data
         ]
 
-        print(f"Pobrano i utworzono {len(brewery_objects)} instancji klasy Brewery.")
+        print(f"Pobrano i utworzono "
+              f"{len(brewery_objects)} instancji klasy Brewery.")
         return brewery_objects
 
     except requests.exceptions.RequestException as e:
         return []
 
 
-
 if __name__ == "__main__":
     browary_lista: List[Brewery] = get_breweries(count=20)
 
     for i, browar in enumerate(browary_lista):
-            print(browar)
-
+        print(browar)

@@ -45,18 +45,20 @@ class Brewery:
         return description.strip()
 
 
-def get_breweries(count: int = 20, city: Optional[str] = None) -> List[Brewery]:
+def get_breweries(count: int = 20,
+                  city: Optional[str] = None) -> List[Brewery]:
 
     params: Dict[str, Any] = {"per_page": count}
 
     search_info = f"pobieram pierwsze {count} browarów"
 
-
     if city:
         params["by_city"] = city
-        search_info = f"filtruję wg miasta '{city}' i pobieram pierwsze {count} wyników"
+        search_info = (f"filtruję wg miasta '{city}' "
+                       f"i pobieram pierwsze {count} wyników")
 
-    print(f"Łączę się z API: {API_adres} i {search_info}...")
+    print(f"Łączę się z API: {API_adres} "
+          f"i {search_info}...")
 
     try:
         response = requests.get(API_adres, params=params)
@@ -68,7 +70,8 @@ def get_breweries(count: int = 20, city: Optional[str] = None) -> List[Brewery]:
             Brewery(data) for data in breweries_data
         ]
 
-        print(f"Pobrano i utworzono {len(brewery_objects)} instancji klasy Brewery.")
+        print(f"Pobrano i utworzono "
+              f"{len(brewery_objects)} instancji klasy Brewery.")
         return brewery_objects
 
     except requests.exceptions.RequestException as e:
@@ -77,14 +80,17 @@ def get_breweries(count: int = 20, city: Optional[str] = None) -> List[Brewery]:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Skrypt pobiera dane o browarach z Open Brewery DB API, z opcjonalnym filtrowaniem po mieście."
+        description="Skrypt pobiera dane o"
+                    " browarach z Open Brewery "
+                    "DB API, z opcjonalnym filtrowaniem po mieście."
     )
 
     parser.add_argument(
         "--city",
         type=str,
         default=None,
-        help="Ogranicza pobierane browary do podanego miasta (np. --city=san_diego)"
+        help="Ogranicza pobierane browary"
+             " do podanego miasta (np. --city=san_diego)"
     )
 
     args = parser.parse_args()
@@ -95,7 +101,6 @@ def main():
         for i, browar in enumerate(browary_lista):
             print(f"\n--- OBIEKT NR {i + 1} ---")
             print(browar)
-
 
 
 if __name__ == "__main__":
