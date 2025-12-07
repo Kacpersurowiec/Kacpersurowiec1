@@ -1,44 +1,47 @@
-
 class Property:
-    def __init__(self, area, rooms, price, adress):
+    def __init__(self, area, rooms, price, address):
         self.area = int(area)
         self.rooms = int(rooms)
         self.price = int(price)
-        self.adress = str(adress)
+        self.address = str(address)
 
     def __str__(self):
         return (
-            f"Adres: {self.adress}  , Powierzchnia : {self.area},"
-            f"Pokoje: {self.rooms}, Cena:      {self.price} PLN"
+            f"Adres: {self.address}, Powierzchnia: {self.area} m2, "
+            f"Pokoje: {self.rooms}, Cena: {self.price} PLN"
         )
 
+
 class House(Property):
-    def __init__(self, area, rooms, price, adress, plot):
-        super().__init__(area,rooms,price,adress)
+    def __init__(self, area, rooms, price, address, plot):
+        super().__init__(area, rooms, price, address)
         self.plot = int(plot)
 
     def __str__(self):
-        return (f'Adres: {self.adress},'
-                f'Powierzchnia : {self.area},'
-                f'Pokoje: {self.rooms}, Cena: {self.price} PLN'
-                f'        Dzialka: {self.plot} m2'
-                )
+        # Zawijanie linii i poprawa spójności formatowania
+        return (
+            f"Adres: {self.address}, Powierzchnia: {self.area} m2, "
+            f"Pokoje: {self.rooms}, Cena: {self.price} PLN, "
+            f"Działka: {self.plot} m2"
+        )
+
 
 class Flat(Property):
-    def __init__(self, area, rooms, price, adress, floor):
-        super().__init__(area,rooms,price,adress)
+    def __init__(self, area, rooms, price, address, floor):
+        super().__init__(area, rooms, price, address)
         self.floor = int(floor)
 
     def __str__(self):
-        return  (f'Adres: {self.adress},'
-         f'     Powierzchnia : {self.area},'
-         f'     Pokoje: {self.rooms}'
-         f'     Cena: {self.price} PLN'
-         f'     Pietro: {self.floor} ')
+        # Zawijanie linii i poprawa spójności formatowania
+        return (
+            f"Adres: {self.address}, Powierzchnia: {self.area} m2, "
+            f"Pokoje: {self.rooms}, Cena: {self.price} PLN, "
+            f"Piętro: {self.floor}"
+        )
 
-moj_dom = House( 150, 5, 1800000,'Czerwona 5', 300)
 
+moj_dom = House(150, 5, 1800000, 'Czerwona 5', 300)
 moje_mieszkanie = Flat(55, 3, 500000, 'Czerwona 10', 3)
+
 print(moj_dom)
 print(moje_mieszkanie)
-
