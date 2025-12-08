@@ -9,9 +9,6 @@ student_bartek = Student("Bartosz", "Lis", "S67890")
 student_celina = Student("Celina", "Mazur", "S11223")
 
 
-
-
-
 lib_1 = Library(
     city="Warszawa",
     street="Książkowa 10",
