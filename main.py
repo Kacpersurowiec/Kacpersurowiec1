@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-#klasy
+
 class Movie:
     def __init__(self, movie_id, title, genres):
         self.movie_id = movie_id
@@ -33,7 +33,7 @@ class Tag:
         self.tag = tag
         self.timestamp = timestamp
 
-# czytanie plików
+
 def read_csv_data(filename, class_model):
     data_list = []
     try:
@@ -49,7 +49,7 @@ def read_csv_data(filename, class_model):
 
     return data_list
 
-#Endpointy
+
 @app.get("/hello")
 def hello():
     return {'hello': 'world'}
