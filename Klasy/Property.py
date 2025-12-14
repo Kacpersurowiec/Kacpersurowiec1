@@ -31,7 +31,6 @@ class House(Property):
         self.plot = int(plot)
 
     def __str__(self):
-        # Zawijanie linii i poprawa spójności formatowania
         return (
             f"Adres: {self.address}, Powierzchnia: {self.area} m2, "
             f"Pokoje: {self.rooms}, Cena: {self.price} PLN, "
