@@ -50,7 +50,7 @@ def read_csv_data(filename, class_model):
     return data_list
 
 
-@app.get("/hello")
+@app.get("/")
 def hello():
     return {'hello': 'world'}
 
