@@ -1,3 +1,5 @@
+.venv
+.env
+.ipynb_checkpoints
 .idea/
-.ipynb_checkpoints/
-__pycache__/
+ml_sieci_neuronowe_cifar_10/
